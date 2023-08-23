@@ -1,10 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CirclesWithBar } from "react-loader-spinner";
 import axios from "../api/axios";
-import { Link, useNavigate } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 function Login() {
   const [userDetails, setUserDetails] = useState({
@@ -13,7 +13,9 @@ function Login() {
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/profile";
   const handleLogin = async (req, res) => {
     try {
       setLoading(true);
