@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import Profile from "./pages/Profile";
 import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
+import UserController from "./pages/UserController";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="signup" element={<Signup />} />
             <Route path="/" element={<RequireAuth />}>
               <Route path="profile" element={<Profile />} />
+              <Route path="user-details" element={<UserController />} />
             </Route>
           </Route>
         </Routes>
