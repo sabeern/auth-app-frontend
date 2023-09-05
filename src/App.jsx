@@ -6,6 +6,7 @@ import Profile from "./pages/Profile";
 import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
 import UserController from "./pages/UserController";
+import PersistanceLogin from "./components/PersistanceLogin";
 
 function App() {
   return (
@@ -16,9 +17,11 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<Login />} />
             <Route path="signup" element={<Signup />} />
-            <Route path="/" element={<RequireAuth />}>
-              <Route path="profile" element={<Profile />} />
-              <Route path="user-details" element={<UserController />} />
+            <Route element={<PersistanceLogin />}>
+              <Route path="/" element={<RequireAuth />}>
+                <Route path="profile" element={<Profile />} />
+                <Route path="user-details" element={<UserController />} />
+              </Route>
             </Route>
           </Route>
         </Routes>
