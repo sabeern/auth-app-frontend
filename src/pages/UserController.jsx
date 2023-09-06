@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useRefreshToken from "../hooks/useRefreshToken";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
+import useLogout from "../hooks/useLogout";
 
 function UserController() {
   const [isMounted, setIsMounted] = useState(true);
@@ -11,6 +12,7 @@ function UserController() {
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const location = useLocation();
+  const logout = useLogout();
   useEffect(() => {
     const controller = new AbortController();
     const getUsers = async () => {
@@ -34,6 +36,10 @@ function UserController() {
     //   controller.abort();
     // };
   }, []);
+  const signout = async () => {
+    await logout();
+    navigate("/");
+  };
   return (
     <div>
       <h1>User Details</h1>
@@ -44,7 +50,7 @@ function UserController() {
           })}
         </ul>
       )}
-      <button onClick={() => refresh()}>Click Me</button>
+      <button onClick={signout}>Logout</button>
     </div>
   );
 }

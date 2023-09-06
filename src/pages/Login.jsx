@@ -1,19 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CirclesWithBar } from "react-loader-spinner";
 import axios from "../api/axios";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import useRefreshToken from "../hooks/useRefreshToken";
 
 function Login() {
   const [userDetails, setUserDetails] = useState({
     email: "",
     password: "",
   });
+  const refresh = useRefreshToken();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { setAuth } = useAuth();
+  const { auth, setAuth } = useAuth();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/profile";
   const handleLogin = async (req, res) => {
@@ -41,6 +43,16 @@ function Login() {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    let checkFunction = async () => {
+      let token = await refresh();
+      console.log("token", auth);
+      if (token) {
+        navigate("/profile");
+      }
+    };
+    checkFunction();
+  }, []);
   return (
     <>
       {loading ? (
